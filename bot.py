@@ -2,20 +2,21 @@ import discord
 import random
 import asyncio
 import json
+import os
 from discord.ext import commands
 
-# קריאת טוקן מתוך config.json
+# קריאת קובץ config.json לפרמטרים האחרים
 with open('config.json') as f:
     config = json.load(f)
 
-TOKEN = config['TOKEN']
+TOKEN = os.getenv("TOKEN")  # קריאת הטוקן מה-Environment ולא מה-config
 
 intents = discord.Intents.default()
 intents.messages = True
 intents.guilds = True
 intents.message_content = True
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix=config['PREFIX'], intents=intents)
 
 TASKS = [
     "זחילה עירום מול מראה עם צילום.",
